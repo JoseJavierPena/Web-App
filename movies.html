@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo de Peliculas</title>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.js"></script>
+
+  <script type="text/javascript">
+
+	  $(document).ready(function(){
+
+	  	$('.card .dimmer').dimmer({on: 'hover'});
+
+	  });
+
+	  function addMovie(id, obj)
+	  {
+
+	  		var movieName = document.getElementById('name'+id).textContent;
+	  	//	alert(movieName);
+
+
+	  		obj.disabled = 'disable';
+	  		obj.textContent = "Movie Added";
+
+		  var movieData = {
+
+		  		'movieName': document.getElementById('name'+id).textContent,
+					'movieDate': document.getElementById('date'+id).textContent,
+					'movieViewers': document.getElementById('viewers'+id).textContent
+
+		  };
+
+     // alert(document.getElementById('viewers'+id).textContent);
+		  
+      var API = "https://y4hqc3ox65.execute-api.us-east-1.amazonaws.com/DEV/addMovie";
+
+		  $.ajax({
+
+		  		url: API,
+		  		type: 'POST',
+		  		data: JSON.stringify(movieData),
+		  		contentType: 'application/json; charset=utf-8',
+		  		success: function(response){
+
+		  			alert('Movie ' + movieName + ' has been watched ');
+		  		},
+		  		error: function(){
+		  			alert('Error adding movie to the watch list');
+		  		}
+
+		  });
+
+	}
+
+  </script>
+
+</head>
+<body>
+
+<div class="ui container">
+	
+	<h1>Catalogo de Peliculas</h1>
+	<div class="ui special cards">
+  <div class="card">
+    <div class="blurring dimmable image">
+      <div class="ui dimmer">
+        <div class="content">
+          <div class="center">
+            <button class="ui inverted button" onclick="addMovie(1, this)">Add Movie</button>
+          </div>
+        </div>
+      </div>
+      <img src="http://icons.iconarchive.com/icons/danzakuduro/english-movies/512/Inception-v4-icon.png">
+    </div>
+    <div class="content">
+      <a class="header" id="name1">Inception</a>
+      <div class="meta">
+        <span class="date" id="date1">Created in Sep 2011</span>
+      </div>
+    </div>
+    <div class="extra content">
+      <a id="viewers1">200M Viewers
+        <i class="users icon"></i>
+        
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="blurring dimmable image">
+      <div class="ui inverted dimmer">
+        <div class="content">
+          <div class="center">
+            <button class="ui primary button" onclick="addMovie(2, this)">Add Movie</button>
+          </div>
+        </div>
+      </div>
+      <img src="http://icons.iconarchive.com/icons/danzakuduro/english-movies/512/Batman-The-Dark-Knight-icon.png">
+    </div>
+    <div class="content">
+      <a class="header" id="name2">The Dark Night</a>
+      <div class="meta">
+        <span class="date" id="date2">Created in July 2017</span>
+      </div>
+    </div>
+    <div class="extra content">
+      <a id="viewers2">250M Viewers
+        <i class="users icon"></i>
+        
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
